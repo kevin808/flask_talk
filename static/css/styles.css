@@ -1,0 +1,83 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.controls button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.controls button {
+  cursor: pointer;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px 24px;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+}
+
+.controls button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.controls button:disabled {
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.controls button:disabled:hover {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+
+.results {
+  margin-top: 20px;
+}
+
+textarea#phraseDiv {
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+  height: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  resize: none;
+}
+
+.status {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#listeningStatus {
+  color: #007bff;
+}
+
+#speakingStatus {
+  color: #4CAF50;
+}

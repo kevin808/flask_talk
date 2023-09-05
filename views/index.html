@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>心有灵犀</title>
+  <meta charset="utf-8" />
+  <link href="static/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="warning">
+    <h1>加载中...</h1>
+  </div>
+  
+  <div id="content" style="display:none">
+    <div class="main-container">
+      <h1>心有灵犀</h1>
+      <div class="controls">
+        <button id="startOpenAICommunication">呼叫</button>
+        <button id="stopOpenAICommunication">挂断</button>
+      </div>
+      <tr>
+        <td>
+          <div id="listeningStatus" class="status"></div>
+          <div id="speakingStatus" class="status"></div>
+        </td>
+      </tr>
+      <div class="results">
+        <!-- <label for="phraseDiv"></label> -->
+        <textarea id="phraseDiv"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include microsoft.cognitiveservices.speech.sdk-->
+  <!-- <script src="static/js/microsoft.cognitiveservices.speech.sdk.bundle.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js">
+  </script>
+  <!-- Include OpenAI API -->
+  <script src="static/js/axios.min.js"></script>
+
+  <script src="static/js/app.js"></script>
+</body>
+</html>
