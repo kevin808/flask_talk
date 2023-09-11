@@ -7,7 +7,7 @@ let AZURE_SPEECH_KEY, AZURE_SPEECH_REGION;
 let recognizer, synthesizer;
 let conversation = [
   { "role": "system", "content": "你的名字是灵犀，你在打电话，你的目标是让我开心起来" },
-  { "role": "user", "content": "你在和我打电话,要求回复在15字以内" },
+  { "role": "user", "content": "你在和我打电话,每次回复必须在15字以内" },
   { "role": "assistant", "content": "好的" }
 ];
 
@@ -19,8 +19,8 @@ async function fetchAzureKeys() {
 
   const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_SPEECH_KEY, AZURE_SPEECH_REGION);
   speechConfig.speechRecognitionLanguage = "zh-CN";
-  speechConfig.speechSynthesisVoiceName = "zh-CN-YunxiNeural";
-
+  // speechConfig.speechSynthesisVoiceName = "zh-CN-YunxiNeural";
+  speechConfig.speechSynthesisVoiceName = localStorage.getItem("voiceName") || "zh-CN-YunxiNeural";
   const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
   recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
   synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
@@ -39,7 +39,7 @@ async function speechToText() {
       conversation.push(userMessage);
 
       // phraseDiv.innerHTML += "Speaking..." + "\n";
-      speakingStatus.textContent = "讲话中...";
+      // speakingStatus.textContent = "讲话中...";
 
       const openAIResponse = await openAIAPIRequest(conversation);
       speakingStatus.textContent = "";
@@ -65,6 +65,11 @@ async function textToSpeech(inputText) {
   synthesizer.speakTextAsync(
     inputText,
     function (result) {
+      window.console.log(inputText);
+      window.console.log(inputText.length);
+      setTimeout(() => {
+        speechToText();
+      }, inputText.length * 210);
     },
     function (err) {
       phraseDiv.innerHTML += "Error: ";
@@ -74,7 +79,6 @@ async function textToSpeech(inputText) {
 
       synthesizer.close();
     });
-  await speechToText();
 }
 
 async function openAIAPIRequest(conversation) {

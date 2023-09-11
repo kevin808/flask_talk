@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>选择聊天对象</title>
+  <meta charset="utf-8" />
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      text-align: center;
+    }
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-container img {
+      width: 2in;
+      height: 2in;
+      object-fit: contain;
+      margin: 0 10px;
+      transition: transform 0.2s ease-in-out;
+    }
+    .image-container img:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>快来和我聊天吧</h1>
+  <div class="image-container">
+    <img src="yunxi.png" alt="Yunxi" onclick="setVoice('zh-CN-YunxiNeural')">
+    <img src="xiaoyi.png" alt="Xiaoyi" onclick="setVoice('zh-CN-XiaoyiNeural')">
+  </div>
+  <script>
+    function setVoice(voiceName) {
+      localStorage.setItem("voiceName", voiceName);
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

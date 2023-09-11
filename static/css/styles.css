@@ -71,13 +71,22 @@ textarea#phraseDiv {
 
 .status {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin: 10px 0;
 }
 
 #listeningStatus {
   color: #007bff;
+  display: block;
+  width: 100%;
+  line-height: 10px;
 }
+
+#listeningStatus:empty:before {
+  content: "\00a0";
+}
+
 
 #speakingStatus {
   color: #4CAF50;
+  display: block;
 }
