@@ -27,24 +27,29 @@ async function fetchAzureKeys() {
 }
 
 async function speechToText() {
-  listeningStatus.textContent = "聆听中...";
-  // phraseDiv.innerHTML += "Listening..." + "\n";
+  listeningStatus.textContent = "正在聆听";
 
   recognizer.recognizeOnceAsync(
     async function (result) {
       listeningStatus.textContent = "";
-      phraseDiv.innerHTML += "User: " + result.text + "\n";
+      let userMessageElement = document.createElement("div");
+      userMessageElement.className = "message sender";
+      userMessageElement.innerHTML = '<div class="avatar"><img src="sender_avatar.jpg" alt="Sender Avatar"></div><p>' + result.text + '</p>';
+      phraseDiv.appendChild(userMessageElement);
+      phraseDiv.scrollTop = phraseDiv.scrollHeight;
 
       let userMessage = { "role": "user", "content": result.text || '' };
       conversation.push(userMessage);
 
-      // phraseDiv.innerHTML += "Speaking..." + "\n";
-      // speakingStatus.textContent = "讲话中...";
-
       const openAIResponse = await openAIAPIRequest(conversation);
       speakingStatus.textContent = "";
 
-      phraseDiv.innerHTML += "AI: " + openAIResponse.message + "\n";
+      let aiMessageElement = document.createElement("div");
+      aiMessageElement.className = "message receiver";
+      aiMessageElement.innerHTML = '<div class="avatar"><img src="receiver_avatar.jpg" alt="Receiver Avatar"></div><p>' + openAIResponse.message + '</p>';
+      phraseDiv.appendChild(aiMessageElement);
+      phraseDiv.scrollTop = phraseDiv.scrollHeight;
+
       let aiMessage = { "role": "assistant", "content": openAIResponse.message };
       conversation.push(aiMessage);
 
@@ -53,7 +58,10 @@ async function speechToText() {
       };
     },
     function (err) {
-      phraseDiv.innerHTML += "Error: " + err + "\n";
+      let errorMessageElement = document.createElement("div");
+      errorMessageElement.className = "message error";
+      errorMessageElement.innerText = "Error: " + err;
+      phraseDiv.appendChild(errorMessageElement);
       window.console.log(err);
 
       recognizer.close();

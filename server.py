@@ -12,8 +12,12 @@ app.config['IMAGE_FOLDER'] = IMAGE_FOLDER
 
 # 图片文件的路由函数
 @app.route('/<image_name>.png')
-def get_image(image_name):
+def get_png_image(image_name):
     return send_file(os.path.join(app.config['IMAGE_FOLDER'], f'{image_name}.png'), mimetype='image/png')
+
+@app.route('/<image_name>.jpg')
+def get_jpg_image(image_name):
+    return send_file(os.path.join(app.config['IMAGE_FOLDER'], f'{image_name}.jpg'), mimetype='image/jpg')
 
 # 聊天机器人的路由函数
 @app.route('/openai', methods=['POST'])
@@ -31,10 +35,10 @@ def azure_keys():
 
 # 主页的路由函数
 @app.route('/')
-@app.route('/index.html')
-@app.route('/voice.html')
+@app.route('/talk.html')
+@app.route('/select.html')
 def index():
-    return render_template(request.path[1:] or 'voice.html')
+    return render_template(request.path[1:] or 'select.html')
 
 if __name__ == '__main__':
     # 应用程序的运行方式进行优化

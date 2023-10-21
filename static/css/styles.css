@@ -3,6 +3,38 @@ body {
   font-size: 13px;
 }
 
+.title {
+  font-size: 24px; /* Adjust as needed */
+  color: #8A2BE2; /* Adjust to change the color */
+  font-weight: 400; /* Adjust to make the text thicker or thinner */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.listening {
+  font-size: 15px; /* Adjust as needed */
+  color: #FF4500; /* Adjust to change the color */
+  font-weight: bold; /* Adjust to make the text thicker or thinner */
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px; /* Adjust as needed */
+  color: #FFFFFF; /* Adjust to change the color */
+  background-color: #4CAF50; /* Adjust to change the background color */
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #45a049; /* Adjust to change the hover background color */
+}
+
 .main-container {
   width: 100%;
   max-width: 800px;
@@ -25,18 +57,6 @@ body {
   border-radius: 4px;
 }
 
-.controls button {
-  cursor: pointer;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  text-align: center;
-  font-size: 14px;
-  padding: 10px 24px;
-  transition-duration: 0.4s;
-  border-radius: 4px;
-}
-
 .controls button:hover {
   background-color: #4CAF50;
   color: white;
@@ -47,27 +67,62 @@ body {
   background-color: #cccccc;
   color: #666666;
 }
-
-.controls button:disabled:hover {
-  background-color: #cccccc;
-  color: #666666;
-}
-
-
 .results {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 400px; /* Adjust this value according to your needs */
 }
 
-textarea#phraseDiv {
-  display: inline-block;
-  width: 100%;
-  max-width: 500px;
-  height: 400px;
+.message {
+  display: flex;
+  max-width: 60%;
+  margin: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  resize: none;
+  border-radius: 10px;
 }
+
+.sender {
+  align-self: flex-start;
+  background-color: #dcf8c6;
+  flex-direction: row;
+}
+
+.sender .avatar {
+  order: 1;
+}
+
+.sender p {
+  order: 2;
+}
+
+.sender img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.receiver {
+  align-self: flex-end;
+  background-color: #ece5dd;
+  flex-direction: row-reverse;
+}
+
+.receiver .avatar {
+  order: 1;
+}
+
+.receiver p {
+  order: 2;
+}
+
+.receiver img {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+}
+
 
 .status {
   font-weight: bold;
@@ -84,7 +139,6 @@ textarea#phraseDiv {
 #listeningStatus:empty:before {
   content: "\00a0";
 }
-
 
 #speakingStatus {
   color: #4CAF50;
