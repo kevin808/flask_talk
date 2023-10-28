@@ -9,12 +9,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_bot_response(message):
 #Note: The openai-python library support for Azure OpenAI is in preview.
-    if message == '':
+    if message == 'undefined':
         return '抱歉,我没有听清楚'
     response_text = ''
     try:
         response = openai.ChatCompletion.create(
-            model="qwen-plus",
+            model="ERNIE-Bot-turbo",
             messages = message,
             temperature=1.0,
             max_tokens=100,
