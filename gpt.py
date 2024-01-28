@@ -1,20 +1,19 @@
-#Note: The openai-python library support for Azure OpenAI is in preview.
 import os
-import openai
-# openai.api_type = "azure"
-openai.api_base = os.getenv("OPENAI_API_BASE_URL")
-# openai.api_version = "2023-03-15-preview"
-openai.api_key = os.getenv("OPENAI_API_KEY")
-# openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
+from openai import OpenAI
+
+client = OpenAI(
+  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+  base_url=os.environ['OPENAI_API_BASE_URL']
+)
 
 def get_bot_response(message):
-#Note: The openai-python library support for Azure OpenAI is in preview.
-    if message == 'undefined':
-        return '抱歉,我没有听清楚'
+    print(message)
+    if message[-1]['content'] == '.':
+        return '抱歉，我没有听清楚'
     response_text = ''
     try:
-        response = openai.ChatCompletion.create(
-            model="ERNIE-Bot-turbo",
+        response = client.chat.completions.create(
+            model="gpt-4",
             messages = message,
             temperature=1.0,
             max_tokens=100,
@@ -22,8 +21,9 @@ def get_bot_response(message):
             frequency_penalty=0,
             presence_penalty=0,
             stop=None)
-        response_text = response['choices'][0]['message']['content']
+        response_text = response.choices[0].message.content
+
     except Exception as e:
         response_text = str(e)
-    # Return the formatted response text
+
     return response_text
