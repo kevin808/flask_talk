@@ -34,7 +34,8 @@ async function speechToText() {
       listeningStatus.textContent = "";
       let userMessageElement = document.createElement("div");
       userMessageElement.className = "message sender";
-      userMessageElement.innerHTML = '<div class="avatar"><img src="sender_avatar.jpg" alt="Sender Avatar"></div><p>' + result.text + '</p>';
+      // userMessageElement.innerHTML = '<div class="avatar"><img src="sender_avatar.jpg" alt="Sender Avatar"></div><p>' + result.text + '</p>';
+      userMessageElement.innerHTML = '你： ' + result.text + '</p>';
       phraseDiv.appendChild(userMessageElement);
       phraseDiv.scrollTop = phraseDiv.scrollHeight;
 
@@ -46,7 +47,7 @@ async function speechToText() {
 
       let aiMessageElement = document.createElement("div");
       aiMessageElement.className = "message receiver";
-      aiMessageElement.innerHTML = '<div class="avatar"><img src="receiver_avatar.jpg" alt="Receiver Avatar"></div><p>' + openAIResponse.message + '</p>';
+      aiMessageElement.innerHTML = '好友：' + openAIResponse.message + '</p>';
       phraseDiv.appendChild(aiMessageElement);
       phraseDiv.scrollTop = phraseDiv.scrollHeight;
 

@@ -3,7 +3,7 @@ from openai import OpenAI
 
 client = OpenAI(
   api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
-  base_url=os.environ['OPENAI_API_BASE_URL']
+  base_url=os.environ['BASE_URL']
 )
 
 def get_bot_response(message):

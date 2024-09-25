@@ -1,36 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>心有灵犀</title>
-  <meta charset="utf-8" />
-  <link href="static/css/styles.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心有灵犀 - 倾听你的心声</title>
+    <style>
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #2c3e50;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .content {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            color: #3498db;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        button, .back-button {
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+        button:hover, .back-button:hover {
+            background-color: #2980b9;
+        }
+        .back-button {
+            background-color: #e74c3c;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #c0392b;
+        }
+        .status {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .results {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            margin-top: 1rem;
+        }
+        #warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
-  <div id="warning">
-    <h1>加载中...</h1>
-  </div>
-  
-  <div id="content" style="display:none">
-    <div class="main-container">
-      <h1 class="title">心有灵犀</h1>
-      <div class="controls">
-        <button id="startOpenAICommunication">呼叫</button>
-        <button id="stopOpenAICommunication">挂断</button>
-        <a class="back-button" href="select.html">返回</a>
-      </div>
-      <tr>
-        <td>
-          <div id="speakingStatus" class="status"></div>
-          <div id="listeningStatus" class="listening"></div>
-        </td>
-      </tr>
-      <div class="results" id="phraseDiv">
-      </div>
+    <div id="warning">
+        <h1>正在为你准备温暖的对话空间...</h1>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
-  <!-- <script src="static/js/microsoft.cognitiveservices.speech.sdk.bundle.js"></script> -->
-  <script src="static/js/axios.min.js"></script>
-  <script src="static/js/app.js"></script>
+    
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="content">
+            <h1>心有灵犀</h1>
+            <p>在这里，你可以畅所欲言，倾诉你的心声。我们在倾听，并随时准备为你提供支持。</p>
+            
+            <div class="controls">
+                <button id="startOpenAICommunication">开始对话</button>
+                <button id="stopOpenAICommunication">结束对话</button>
+                <a class="back-button" href="select.html">返回</a>
+            </div>
+            <div id="speakingStatus" class="status"></div>
+            <div id="listeningStatus" class="status"></div>
+            <div class="results" id="phraseDiv"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+    <script src="static/js/axios.min.js"></script>
+    <script src="static/js/app.js"></script>
+    <script>
+        function initializeInterface() {
+            document.getElementById('warning').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'flex';
+            
+            const startButton = document.getElementById('startOpenAICommunication');
+            const stopButton = document.getElementById('stopOpenAICommunication');
+            
+            if (typeof window.startOpenAICommunication === 'function') {
+                startButton.addEventListener('click', window.startOpenAICommunication);
+            } else {
+                console.error('startOpenAICommunication function not found');
+                startButton.disabled = true;
+            }
+            
+            if (typeof window.stopOpenAICommunication === 'function') {
+                stopButton.addEventListener('click', window.stopOpenAICommunication);
+            } else {
+                console.error('stopOpenAICommunication function not found');
+                stopButton.disabled = true;
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeInterface);
+        } else {
+            initializeInterface();
+        }
+    </script>
 </body>
 </html>
