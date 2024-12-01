@@ -13,7 +13,7 @@ def get_bot_response(message):
     response_text = ''
     try:
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages = message,
             temperature=1.0,
             max_tokens=100,
@@ -21,6 +21,7 @@ def get_bot_response(message):
             frequency_penalty=0,
             presence_penalty=0,
             stop=None)
+        # print(response)
         response_text = response.choices[0].message.content
 
     except Exception as e:

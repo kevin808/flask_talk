@@ -1,2 +1,2 @@
 flask
-openai
+openai>1.0

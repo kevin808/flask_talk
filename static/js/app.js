@@ -107,28 +107,28 @@ async function openAIAPIRequest(conversation) {
   }
 }
 
-document.getElementById("startOpenAICommunication").addEventListener("click", async function () {
-  startRecognizeOnceAsyncButton.disabled = true;
-  stopRecognizeOnceAsyncButton.disabled = false;
+document.addEventListener('DOMContentLoaded', function() {
+    if (!!window.SpeechSDK) {
+        SpeechSDK = window.SpeechSDK;
+        fetchAzureKeys().then(() => {
+            startRecognizeOnceAsyncButton.disabled = false;
+            stopRecognizeOnceAsyncButton.disabled = true;
+        });
+        
+        startRecognizeOnceAsyncButton.addEventListener("click", async function () {
+            startRecognizeOnceAsyncButton.disabled = true;
+            stopRecognizeOnceAsyncButton.disabled = false;
+            await speechToText();
+        });
 
-  await speechToText();
+        stopRecognizeOnceAsyncButton.addEventListener("click", async function () {
+            startRecognizeOnceAsyncButton.disabled = false;
+            stopRecognizeOnceAsyncButton.disabled = true;
+            recognizer.close();
+            synthesizer.close();
+        });
 
+        document.getElementById('mainContent').style.display = 'flex';
+        document.getElementById('warning').style.display = 'none';
+    }
 });
-
-document.getElementById("stopOpenAICommunication").addEventListener("click", async function () {
-  startRecognizeOnceAsyncButton.disabled = true;
-  stopRecognizeOnceAsyncButton.disabled = true;
-  recognizer.close();
-  synthesizer.close();
-  });
-  
-  if (!!window.SpeechSDK) {
-  SpeechSDK = window.SpeechSDK;
-  fetchAzureKeys().then(() => {
-  startRecognizeOnceAsyncButton.disabled = false;
-  stopRecognizeOnceAsyncButton.disabled = true;
-  });
-  
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('warning').style.display = 'none';
-  }
